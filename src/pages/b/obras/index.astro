@@ -1,0 +1,49 @@
+---
+// Works index: series as text lists (Luana Vitra), a thumbnail per line, hover shows it big on desktop.
+import BShell from "../../../components/BShell.astro";
+import Foto from "../../../components/Foto.astro";
+import { series } from "../../../data/obras";
+import { u } from "../../../lib/url";
+---
+<BShell title="Obras · Jess Duma · Opção B" atual="obras">
+  <main class="idx">
+    {series.map((s, i) => (
+      <section class:list={["idx-serie", i === 0 && "atual"]}>
+        <div class="idx-head">
+          <p class="eyebrow">{i === 0 ? "Série em curso" : "Série"}</p>
+          <h2>{s.nome}</h2>
+          {s.texto.slice(0, 1).map((t) => <p class="idx-txt">{t}</p>)}
+        </div>
+        <ol class="idx-lista">
+          {s.obras.map((ob) => (
+            <li>
+              <a href={u(`b/obras/${ob.slug}/`)}>
+                <Foto name={ob.principal} alt="" sizes="160px" widths={[320, 640]} class="idx-thumb" />
+                <span class="idx-tit">{ob.titulo}</span>
+                <span class="idx-ano">{ob.ano}</span>
+                <span class="idx-tec">{ob.tecnica}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </main>
+</BShell>
+
+<style is:global>
+  .idx-serie { display: grid; gap: 28px; padding: 40px 0 80px; border-top: 1px solid var(--cinza-claro); }
+  .idx-serie:first-child { border-top: 0; }
+  @media (min-width: 960px) { .idx-serie { grid-template-columns: 1fr 2fr; gap: 5vw; } .idx-head { position: sticky; top: 90px; align-self: start; } }
+  .idx-head h2 { font: 400 clamp(36px, 4.6vw, 64px)/.95 var(--display); text-transform: uppercase; margin: 0 0 18px; }
+  .idx-serie.atual h2 { color: var(--azul); }
+  .idx-txt { color: #444; max-width: 46ch; margin: 0; line-height: 1.6; }
+  .idx-lista { list-style: none; margin: 0; padding: 0; }
+  .idx-lista a { display: grid; grid-template-columns: 96px 1fr auto; grid-template-areas: "t n a" "t c c"; column-gap: 20px; row-gap: 2px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--cinza-claro); text-decoration: none; }
+  .idx-thumb { grid-area: t; width: 96px; height: 64px; object-fit: cover; filter: grayscale(.2); transition: filter .2s; }
+  .idx-tit { grid-area: n; font-size: 17px; font-weight: 500; align-self: end; }
+  .idx-ano { grid-area: a; color: var(--cinza); align-self: end; font-variant-numeric: tabular-nums; }
+  .idx-tec { grid-area: c; color: var(--cinza); font-size: 13px; align-self: start; }
+  .idx-lista a:hover .idx-tit { color: var(--azul-vivo); }
+  .idx-lista a:hover .idx-thumb { filter: none; }
+</style>

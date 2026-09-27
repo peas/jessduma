@@ -1,0 +1,33 @@
+<!-- Click any [data-zoom] image to see it large. Native <dialog>, no library. -->
+<dialog class="lb" aria-label="Imagem ampliada">
+  <button class="lb-x" aria-label="Fechar">×</button>
+  <img alt="" />
+  <p class="lb-cap"></p>
+</dialog>
+
+<style is:global>
+  [data-zoom] { cursor: zoom-in; }
+  .lb { border: 0; padding: 0; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; background: rgba(255,255,255,.97); }
+  .lb::backdrop { background: rgba(255,255,255,.97); }
+  .lb[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+  .lb img { max-width: 94vw; max-height: 84vh; object-fit: contain; cursor: zoom-out; }
+  .lb-cap { margin: 0 16px; font-size: 13px; color: var(--cinza); text-align: center; max-width: 70ch; }
+  .lb-x { position: absolute; top: 12px; right: 18px; background: none; border: 0; font-size: 34px; line-height: 1; cursor: pointer; color: var(--tinta); }
+</style>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>(".lb")!;
+  const big = dlg.querySelector("img")!;
+  const cap = dlg.querySelector(".lb-cap")!;
+  document.addEventListener("click", (e) => {
+    const el = (e.target as HTMLElement).closest<HTMLElement>("[data-zoom]");
+    if (!el) return;
+    const im = el.tagName === "IMG" ? (el as HTMLImageElement) : el.querySelector("img");
+    if (!im) return;
+    big.src = im.currentSrc || im.src;
+    big.alt = im.alt;
+    cap.textContent = el.dataset.caption || im.alt;
+    dlg.showModal();
+  });
+  dlg.addEventListener("click", () => dlg.close());
+</script>

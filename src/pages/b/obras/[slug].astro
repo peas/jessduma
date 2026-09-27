@@ -1,0 +1,72 @@
+---
+// One work = one page (Luana Vitra, Marcius Galan): whole piece, details, installation views,
+// full caption in cm and inches, an e-mail inquiry with the subject filled in, prev/next.
+import BShell from "../../../components/BShell.astro";
+import Foto from "../../../components/Foto.astro";
+import Lightbox from "../../../components/Lightbox.astro";
+import { todasObras, artista, type Obra } from "../../../data/obras";
+import { polegadas } from "../../../lib/medidas";
+import { u } from "../../../lib/url";
+
+export function getStaticPaths() {
+  return todasObras.map((ob, i) => ({
+    params: { slug: ob.slug },
+    props: { ob, ant: todasObras[i - 1], prox: todasObras[i + 1] },
+  }));
+}
+interface Props { ob: Obra; ant?: Obra; prox?: Obra }
+const { ob, ant, prox } = Astro.props;
+const assunto = encodeURIComponent(`${ob.titulo} (${ob.ano})`);
+const fotos = [
+  { name: ob.principal, leg: "" },
+  ...ob.detalhes.map((d) => ({ name: d, leg: "Detalhe" })),
+  ...ob.vistas.map((v) => ({ name: v.img, leg: v.legenda })),
+];
+---
+<BShell title={`${ob.titulo} · Jess Duma`} atual="obras">
+  <main class="ob">
+    <div class="ob-fotos">
+      {fotos.map((f, i) => (
+        <figure data-zoom data-caption={`${ob.titulo}, ${ob.ano}${f.leg ? `. ${f.leg}` : ""}`}>
+          <Foto name={f.name} alt={`${ob.titulo}${f.leg ? `, ${f.leg.toLowerCase()}` : ""}`} sizes="(min-width: 960px) 64vw, 100vw" eager={i === 0} />
+          {f.leg && <figcaption>{f.leg}</figcaption>}
+        </figure>
+      ))}
+    </div>
+    <aside class="ob-ficha">
+      <p class="eyebrow">{ob.serie}</p>
+      <h1>{ob.titulo}</h1>
+      <dl>
+        <dt>Ano</dt><dd>{ob.ano}</dd>
+        <dt>Técnica</dt><dd>{ob.tecnica}</dd>
+        <dt>Dimensões</dt><dd>{ob.dimensoes}<br /><span class="in">{polegadas(ob.dimensoes)}</span></dd>
+        {ob.formato && <><dt>Formato</dt><dd>{ob.formato}</dd></>}
+      </dl>
+      <a class="ob-consulta" href={`mailto:${artista.email}?subject=${assunto}`}>Consultar sobre esta obra →</a>
+      <nav class="ob-nav">
+        {ant ? <a href={u(`b/obras/${ant.slug}/`)}>← {ant.titulo}</a> : <span />}
+        {prox && <a href={u(`b/obras/${prox.slug}/`)}>{prox.titulo} →</a>}
+      </nav>
+    </aside>
+  </main>
+  <Lightbox />
+</BShell>
+
+<style is:global>
+  .ob { display: grid; gap: 40px; }
+  @media (min-width: 960px) { .ob { grid-template-columns: 2fr 1fr; gap: 5vw; } .ob-ficha { position: sticky; top: 100px; align-self: start; } }
+  .ob-fotos { display: grid; gap: 48px; }
+  .ob-fotos figure { margin: 0; }
+  .ob-fotos img { width: 100%; }
+  .ob-fotos figcaption { font-size: 12px; color: var(--cinza); margin-top: 8px; }
+  .ob-ficha h1 { font: 400 clamp(34px, 3.6vw, 52px)/1 var(--display); text-transform: uppercase; margin: 0 0 28px; }
+  .ob-ficha dl { display: grid; grid-template-columns: 96px 1fr; gap: 10px 12px; margin: 0 0 32px; font-size: 14px; line-height: 1.5; }
+  .ob-ficha dt { color: var(--cinza); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; padding-top: 2px; }
+  .ob-ficha dd { margin: 0; }
+  .ob-ficha .in { color: var(--cinza); }
+  .ob-consulta { display: inline-block; padding: 12px 18px; border: 1px solid var(--tinta); text-decoration: none; font-size: 13px; letter-spacing: .04em; transition: background .2s, color .2s; }
+  .ob-consulta:hover { background: var(--azul); border-color: var(--azul); color: #fff; }
+  .ob-nav { display: flex; justify-content: space-between; gap: 16px; margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--cinza-claro); font-size: 13px; }
+  .ob-nav a { text-decoration: none; color: var(--cinza); }
+  .ob-nav a:hover { color: var(--tinta); }
+</style>

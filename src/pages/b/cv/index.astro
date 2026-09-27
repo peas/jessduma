@@ -1,0 +1,51 @@
+---
+// Bio + CV in HTML with the standard sections (Marcius Galan format: "2026 | Title, Venue, City").
+import BShell from "../../../components/BShell.astro";
+import Foto from "../../../components/Foto.astro";
+import { artista, exposicoes, formacao } from "../../../data/obras";
+---
+<BShell title="Bio e CV · Jess Duma · Opção B" atual="cv">
+  <main class="cv">
+    <section class="cv-bio">
+      <Foto name="retrato" alt="Retrato de Jess Duma" sizes="(min-width: 960px) 24vw, 60vw" widths={[480, 960]} eager />
+      <div>
+        <h1 class="b-h">Jess Duma</h1>
+        <p class="eyebrow">Paraná · vive e trabalha em São Paulo</p>
+        <p class="cv-txt">{artista.bio}</p>
+      </div>
+    </section>
+
+    <section class="cv-listas">
+      <div>
+        <h2>Exposições coletivas</h2>
+        <ul>{exposicoes.map((e) => <li><span>{e.ano}</span><span>{e.titulo}, {e.local}</span></li>)}</ul>
+      </div>
+      <div>
+        <h2>Formação e grupos de estudo</h2>
+        <ul>{formacao.map((e) => <li><span>{e.ano}</span><span>{e.titulo}{e.local && <>, {e.local}</>}</span></li>)}</ul>
+      </div>
+    </section>
+
+    <section id="contato" class="cv-contato">
+      <h2>Contato</h2>
+      <p>Estúdio: <a href={`mailto:${artista.email}`}>{artista.email}</a></p>
+      <p>Instagram: <a href={`https://instagram.com/${artista.instagram}`}>@{artista.instagram}</a></p>
+    </section>
+  </main>
+</BShell>
+
+<style is:global>
+  .cv-bio { display: grid; gap: 32px; padding-bottom: 72px; }
+  .cv-bio img { width: min(100%, 320px); }
+  @media (min-width: 960px) { .cv-bio { grid-template-columns: 1fr 2fr; gap: 5vw; align-items: end; } }
+  .cv-txt { font-family: var(--texto); font-size: clamp(18px, 1.7vw, 22px); line-height: 1.55; max-width: 44ch; margin: 0; }
+  .cv h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--azul-vivo); font-weight: 500; margin: 0 0 12px; }
+  .cv-listas { display: grid; gap: 48px; padding: 48px 0 72px; border-top: 1px solid var(--cinza-claro); }
+  @media (min-width: 960px) { .cv-listas { grid-template-columns: 1fr 1fr; gap: 5vw; } }
+  .cv-listas ul { list-style: none; margin: 0; padding: 0; }
+  .cv-listas li { display: grid; grid-template-columns: 52px 1fr; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--cinza-claro); line-height: 1.45; }
+  .cv-listas li span:first-child { color: var(--cinza); font-variant-numeric: tabular-nums; }
+  .cv-contato { padding-top: 48px; border-top: 1px solid var(--cinza-claro); }
+  .cv-contato p { font-size: 20px; margin: 6px 0; }
+  .cv-contato a { text-decoration-color: var(--azul-vivo); text-underline-offset: 4px; }
+</style>

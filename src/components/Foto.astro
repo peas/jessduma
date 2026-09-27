@@ -1,0 +1,28 @@
+---
+// Responsive photo from src/assets/obras. Astro builds webp at several widths.
+import { Image } from "astro:assets";
+import { img } from "../data/obras";
+
+interface Props {
+  name: string;
+  alt: string;
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+  widths?: number[];
+}
+const { name, alt, sizes = "100vw", eager = false, class: cls, widths = [480, 960, 1600, 2400] } = Astro.props;
+const src = img(name);
+const w = widths.filter((x) => x <= src.width);
+---
+<Image
+  src={src}
+  alt={alt}
+  widths={w.length ? w : [src.width]}
+  sizes={sizes}
+  format="webp"
+  quality={82}
+  loading={eager ? "eager" : "lazy"}
+  decoding="async"
+  class={cls}
+/>

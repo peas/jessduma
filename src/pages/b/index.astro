@@ -1,0 +1,21 @@
+---
+// Opção B home: one full-screen close-up, like Mitre Galeria's artist pages. Nothing else.
+import BShell from "../../components/BShell.astro";
+import Foto from "../../components/Foto.astro";
+import { u } from "../../lib/url";
+---
+<BShell title="Jess Duma · Opção B" escuro>
+  <a class="b-hero" href={u("b/obras/")}>
+    <Foto name="biopsia-do-grito-detalhe" alt="Biópsia do Grito, 2026, detalhe" eager />
+    <span class="b-hero-leg">Biópsia do Grito, 2026 · detalhe · <u>ver obras</u></span>
+  </a>
+</BShell>
+
+<style is:global>
+  .b-hero { position: fixed; inset: 0; display: block; background: #111; }
+  .b-hero img { width: 100%; height: 100%; object-fit: cover; }
+  .b-hero-leg { position: absolute; left: var(--lado); bottom: 24px; font-size: 12px; letter-spacing: .06em; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.4); }
+  .b-hero-leg u { text-underline-offset: 3px; }
+  /* the macro is light: header text needs to stay legible */
+  .b-top.escuro { color: #0b0b0c; }
+</style>

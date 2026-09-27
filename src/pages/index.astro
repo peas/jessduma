@@ -1,0 +1,125 @@
+---
+// Proposal landing for Jess: the brief as heard in her audios, three directions, what the research
+// found and what is still open. Once a direction is picked, this page becomes the real home.
+import Base from "../layouts/Base.astro";
+import Foto from "../components/Foto.astro";
+import { u } from "../lib/url";
+
+const opcoes = [
+  {
+    k: "a", nome: "Parede branca", foto: "capa-detalhe", tag: "O que você pediu",
+    txt: "Seguindo o seu briefing à risca: uma página só, seu nome grande em Anton, um detalhe de obra bem de perto (como na Mitre), bio, trajetória, as séries com Drogas Modernas em destaque e os contatos no fim, em azul profundo. Cada obra aparece inteira ao lado de um detalhe, como na referência da Alissa Cica.",
+    pontos: ["Uma página, rolagem simples", "Clique em qualquer foto para ampliar", "Mais próxima do seu portfólio em PDF"],
+  },
+  {
+    k: "b", nome: "Galeria", foto: "biopsia-do-grito-detalhe", tag: "O que a pesquisa mostrou",
+    txt: "O formato que artistas representados por galerias usam (Marcius Galan, Luana Vitra, Tauba Auerbach, a própria Mitre): a home é uma única foto de detalhe em tela cheia, as obras ficam num índice por série, e cada obra tem a sua página, com todas as fotos, a ficha técnica em cm e em polegadas e um botão para consultar a obra por e-mail.",
+    pontos: ["Várias páginas: obras, obra individual, bio e CV", "Link de cada obra para mandar a colecionadores e curadores", "É o que galerias e colecionadores esperam encontrar"],
+  },
+  {
+    k: "c", nome: "Matéria", foto: "capa", tag: "Uma aposta",
+    txt: "A textura como protagonista. Abre como a capa do seu portfólio. Em Drogas Modernas, cada obra aparece primeiro como um detalhe em tela cheia e, conforme a pessoa rola, se afasta até mostrar a peça inteira na parede. Passando o mouse, uma lupa revela a superfície do metal e da resina. A ficha técnica é composta como uma bula: \"Composição: alumínio, cianotipia, cloridrato de lurasidona, resina\".",
+    pontos: ["Uma página, com movimento no scroll", "Lupa sobre a foto (no computador)", "Conversa com o tema da série"],
+  },
+];
+
+const ouvido = [
+  "Clean e chique, fundo branco como parede de galeria, atenção total nas fotos das obras",
+  "Anton nos destaques (nome, títulos) e Hagrid Text nos textos",
+  "Cinza, branco, preto de base e um azul profundo, meio galáctico, em alguns detalhes",
+  "Nome em destaque, bio, lugares por onde você passou, séries e contatos",
+  "Drogas Modernas com mais destaque que des.útil",
+  "Uma imagem de detalhe bem de perto, como na Galeria Mitre, para mostrar a textura",
+  "Metal, química, corrosão: que o site transmita isso, mas sempre limpo",
+];
+
+const pesquisa = [
+  ["Detalhe + obra inteira lado a lado", "Alissa Cica (sua referência) faz isso em quase toda obra; a Mitre abre as páginas de artista com um close em tela cheia."],
+  ["Uma página por obra", "Luana Vitra e Marcius Galan: várias fotos da mesma obra e a legenda completa. Fica fácil mandar o link de uma obra específica."],
+  ["Medidas em cm e polegadas", "Marcius Galan e Tauba Auerbach. Colecionador estrangeiro lê em polegadas."],
+  ["CV em texto, não só em PDF", "Com as seções de costume (formação, exposições coletivas, individuais, prêmios, residências)."],
+  ["Versão em inglês", "Marcius Galan, Luana Vitra, Laura Vinci e Ana Maria Tavares têm PT/EN. Alissa Cica só tem PT."],
+  ["Contato direto", "Ninguém usa botão de \"comprar\": a consulta é por e-mail (ou pela galeria, quando há)."],
+];
+
+const pendencias = [
+  "Qual foto de detalhe você escolheu para o destaque (você comentou que ia mandar). Por enquanto usei detalhes do portfólio.",
+  "O e-mail novo: os protótipos usam o atual (jessduma.di@gmail.com). Telefone ficou de fora de propósito, para não virar alvo de spam. Quer incluir?",
+  "Fonte dos textos: a Hagrid Text é paga (Zetafonts) e a licença do Canva não cobre uso em site. Usei a Hanken Grotesk, gratuita e parecida. Se você tiver ou comprar a licença web, trocamos.",
+  "Versão em inglês: vale fazer já na primeira versão?",
+  "Domínio: jessduma.com.br ou jessduma.com (hoje está em peas.github.io/jessduma).",
+  "Os textos das séries no portfólio usam \"o artista\". Aqui troquei por construções neutras (\"de Jess\", \"busca\"), como na sua bio. Confere se prefere assim.",
+];
+---
+<Base title="Jess Duma · três propostas de site" bodyClass="home">
+  <header class="h-top">
+    <p class="h-kicker">Proposta de site · setembro de 2026</p>
+    <h1>Jess Duma</h1>
+    <p class="h-lead">Três caminhos para o seu site, montados com as obras e os textos do portfólio 2026. Abra cada um, role até o fim e veja no celular também. Dá para misturar: pegar a estrutura de um e um detalhe do outro.</p>
+  </header>
+
+  <section class="h-ops">
+    {opcoes.map((o) => (
+      <a class="h-op" href={u(`${o.k}/`)}>
+        <div class="h-op-img"><Foto name={o.foto} alt="" sizes="(min-width: 1000px) 32vw, 100vw" widths={[480, 960, 1600]} /></div>
+        <p class="h-op-tag">{o.k.toUpperCase()} · {o.tag}</p>
+        <h2>{o.nome}</h2>
+        <p class="h-op-txt">{o.txt}</p>
+        <ul>{o.pontos.map((p) => <li>{p}</li>)}</ul>
+        <span class="h-op-go">Abrir opção {o.k.toUpperCase()} →</span>
+      </a>
+    ))}
+  </section>
+
+  <section class="h-duas">
+    <div>
+      <h2 class="h-sec">O que eu ouvi nos seus áudios</h2>
+      <ul class="h-lista">{ouvido.map((x) => <li>{x}</li>)}</ul>
+    </div>
+    <div>
+      <h2 class="h-sec">O que a pesquisa mostrou</h2>
+      <p class="h-nota">Olhei a sua referência, a Mitre e sites de artistas brasileiros e de fora (Marcius Galan, Luana Vitra, Laura Vinci, Rosana Paulino, José Bechara, Tauba Auerbach, Anish Kapoor, Julian Charrière, Meghann Riepenhoff, Tony Cragg).</p>
+      <dl class="h-pesq">{pesquisa.map(([t, d]) => <><dt>{t}</dt><dd>{d}</dd></>)}</dl>
+    </div>
+  </section>
+
+  <section class="h-pend">
+    <h2 class="h-sec">Para decidir com você</h2>
+    <ol>{pendencias.map((p) => <li>{p}</li>)}</ol>
+  </section>
+</Base>
+
+<style is:global>
+  .home { --lado: clamp(16px, 5vw, 72px); }
+  .h-top { padding: 12vh var(--lado) 8vh; max-width: 1200px; }
+  .h-kicker { font: 500 12px var(--neutro); text-transform: uppercase; letter-spacing: .14em; color: var(--azul-vivo); margin: 0 0 16px; }
+  .home h1 { font: 400 clamp(72px, 14vw, 200px)/.86 var(--display); text-transform: uppercase; margin: 0 0 32px; }
+  .h-lead { font-size: clamp(18px, 1.8vw, 23px); line-height: 1.5; max-width: 50ch; margin: 0; }
+
+  .h-ops { display: grid; gap: 56px; padding: 0 var(--lado) 14vh; }
+  @media (min-width: 1000px) { .h-ops { grid-template-columns: repeat(3, 1fr); gap: 36px; } }
+  .h-op { display: flex; flex-direction: column; text-decoration: none; }
+  .h-op-img { overflow: hidden; aspect-ratio: 4/3; background: #eee; margin-bottom: 20px; }
+  .h-op-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+  .h-op:hover .h-op-img img { transform: scale(1.04); }
+  .h-op-tag { font: 500 11px var(--neutro); text-transform: uppercase; letter-spacing: .14em; color: var(--cinza); margin: 0 0 8px; }
+  .h-op h2 { font: 400 44px/1 var(--display); text-transform: uppercase; margin: 0 0 14px; }
+  .h-op-txt { font-size: 16px; margin: 0 0 14px; }
+  .h-op ul { margin: 0 0 20px; padding-left: 18px; color: var(--cinza); font-size: 14px; }
+  .h-op-go { margin-top: auto; align-self: flex-start; padding: 11px 18px; background: var(--tinta); color: #fff; font: 500 13px var(--neutro); letter-spacing: .04em; transition: background .2s; }
+  .h-op:hover .h-op-go { background: var(--azul); }
+
+  .h-sec { font: 400 28px/1 var(--display); text-transform: uppercase; margin: 0 0 20px; }
+  .h-duas { display: grid; gap: 56px; padding: 10vh var(--lado); background: #f4f4f5; }
+  @media (min-width: 1000px) { .h-duas { grid-template-columns: 1fr 1.3fr; gap: 6vw; } }
+  .h-lista { margin: 0; padding-left: 18px; font-size: 16px; }
+  .h-lista li { margin-bottom: 8px; }
+  .h-nota { color: var(--cinza); font-size: 14px; margin: 0 0 20px; }
+  .h-pesq { margin: 0; }
+  .h-pesq dt { font-weight: 600; margin-top: 14px; }
+  .h-pesq dd { margin: 2px 0 0; font-size: 15px; color: #333; }
+
+  .h-pend { padding: 10vh var(--lado) 14vh; max-width: 900px; }
+  .h-pend ol { padding-left: 22px; margin: 0; }
+  .h-pend li { margin-bottom: 12px; font-size: 16px; }
+</style>

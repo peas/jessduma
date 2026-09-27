@@ -1,0 +1,29 @@
+/* Shared tokens. Palette from Jess's brief: white gallery wall, black base, grays,
+   and a deep "galactic" blue taken from the cyanotypes. */
+:root {
+  --parede: #ffffff;
+  --tinta: #0b0b0c;
+  --cinza: #77777c;
+  --cinza-claro: #e9e9ea;
+  --azul: #14215c;
+  --azul-vivo: #1f3a9e;
+  --display: "Anton", "Impact", sans-serif;
+  --texto: "Hanken Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
+  --neutro: "Instrument Sans Variable", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--parede);
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+::selection { background: var(--azul); color: #fff; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

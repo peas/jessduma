@@ -1,0 +1,190 @@
+---
+// Opção A: "Parede branca". Follows Jess's brief as literally as possible:
+// one page, name in Anton, bio, trajectory, series (Drogas Modernas first and bigger),
+// a Galeria Mitre-style macro detail, contacts. Fonts: Anton + Hanken Grotesk
+// (free stand-in for Hagrid Text, which needs a web license).
+import Base from "../../layouts/Base.astro";
+import Foto from "../../components/Foto.astro";
+import Lightbox from "../../components/Lightbox.astro";
+import OpcaoBar from "../../components/OpcaoBar.astro";
+import { artista, series, exposicoes, formacao, legenda, type Obra } from "../../data/obras";
+
+const [drogas, ...outras] = series;
+const cap = (ob: Obra) => `JESS DUMA. ${ob.titulo}, ${ob.ano}. Série: ${ob.serie}. ${legenda(ob)}`;
+// Big works get the full wall; small ones (5x5 cm dípticos) sit in a grid, like a salon hang.
+const afinidades = drogas.obras.filter((x) => x.slug.startsWith("afinidade"));
+const grandes = drogas.obras.filter((x) => !x.slug.startsWith("afinidade"));
+---
+<Base title="Jess Duma · Opção A" bodyClass="a">
+  <OpcaoBar atual="a" />
+  <header class="top">
+    <a href="#inicio" class="marca">Jess Duma</a>
+    <nav>
+      <a href="#series">Séries</a>
+      <a href="#trajetoria">Trajetória</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="abre">
+      <h1>Jess<br />Duma</h1>
+      <p class="sub">artista visual · São Paulo</p>
+    </section>
+
+    <figure class="macro" data-zoom data-caption="JESS DUMA. Saturação por recaptação I, 2026. Série: Drogas Modernas. Detalhe.">
+      <Foto name="capa-detalhe" alt="Detalhe macro de Saturação por recaptação I: alumínio corroído, resina e comprimidos sobre cianotipia azul" eager />
+      <figcaption>Saturação por recaptação I, 2026 · detalhe</figcaption>
+    </figure>
+
+    <section class="bio">
+      <div class="bio-txt">
+        <h2 class="rotulo">Bio</h2>
+        <p>{artista.bio}</p>
+      </div>
+      <Foto name="retrato" alt="Retrato de Jess Duma em preto e branco" sizes="(min-width: 900px) 30vw, 80vw" widths={[480, 960]} class="retrato" />
+    </section>
+
+    <section id="trajetoria" class="traj">
+      <div>
+        <h2 class="rotulo">Exposições coletivas</h2>
+        <ul>{exposicoes.map((e) => <li><span class="ano">{e.ano}</span><span><b>{e.titulo}</b>{e.local && <>, {e.local}</>}</span></li>)}</ul>
+      </div>
+      <div>
+        <h2 class="rotulo">Formação e grupos</h2>
+        <ul>{formacao.map((e) => <li><span class="ano">{e.ano}</span><span><b>{e.titulo}</b>{e.local && <>, {e.local}</>}</span></li>)}</ul>
+      </div>
+    </section>
+
+    <section id="series">
+      <h2 class="rotulo sec">Séries</h2>
+
+      <article class="serie destaque">
+        <header class="serie-head">
+          <h3>{drogas.nome}</h3>
+          <div>{drogas.texto.map((t) => <p>{t}</p>)}</div>
+        </header>
+
+        {grandes.map((ob, i) => (
+          <div class:list={["obra", i % 2 && "inv"]}>
+            <figure class="principal" data-zoom data-caption={cap(ob)}>
+              <Foto name={ob.principal} alt={`${ob.titulo}, ${ob.ano}`} sizes="(min-width: 900px) 62vw, 100vw" />
+            </figure>
+            <div class="lado">
+              <p class="leg"><b>{ob.titulo}</b>, {ob.ano}<br />{ob.tecnica}<br />{ob.dimensoes}{ob.formato && <> · {ob.formato}</>}</p>
+              {ob.detalhes.slice(0, 1).map((d) => (
+                <figure class="det" data-zoom data-caption={`JESS DUMA. ${ob.titulo}, ${ob.ano}. Detalhe.`}>
+                  <Foto name={d} alt={`${ob.titulo}, detalhe`} sizes="(min-width: 900px) 28vw, 100vw" />
+                </figure>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <div class="salao">
+          <p class="leg"><b>Afinidade D2</b>, 2026 · seis dípticos<br />Alumínio, cianotipia, venlafaxina ou cloridrato de bupropiona e resina · 5 x 5 cm cada</p>
+          <div class="grade">
+            {afinidades.map((ob) => (
+              <figure data-zoom data-caption={cap(ob)}>
+                <Foto name={ob.principal} alt={ob.titulo} sizes="(min-width: 900px) 30vw, 50vw" widths={[480, 960, 1600]} />
+                <figcaption>{ob.titulo}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </article>
+
+      {outras.map((s) => (
+        <article class="serie">
+          <header class="serie-head">
+            <h3>{s.nome}</h3>
+            <div>
+              {s.verbete && <p class="verbete">{s.verbete.map((v) => <span>{v}</span>)}</p>}
+              {s.texto.map((t) => <p>{t}</p>)}
+            </div>
+          </header>
+          <div class="grade menor">
+            {s.obras.map((ob) => (
+              <figure data-zoom data-caption={cap(ob)}>
+                <Foto name={ob.principal} alt={`${ob.titulo}, ${ob.ano}`} sizes="(min-width: 900px) 30vw, 100vw" widths={[480, 960, 1600]} />
+                <figcaption><b>{ob.titulo}</b>, {ob.ano}<br />{ob.tecnica} · {ob.dimensoes}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section id="contato" class="contato">
+      <h2 class="rotulo">Contato</h2>
+      <a href={`mailto:${artista.email}`}>{artista.email}</a>
+      <a href={`https://instagram.com/${artista.instagram}`}>@{artista.instagram}</a>
+    </section>
+  </main>
+  <footer class="pe">© Jess Duma 2026</footer>
+  <Lightbox />
+</Base>
+
+<style is:global>
+  .a { --lado: clamp(16px, 5vw, 72px); }
+  .a .top { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: 16px var(--lado); background: rgba(255,255,255,.92); backdrop-filter: blur(8px); }
+  .a .marca { font-family: var(--display); text-transform: uppercase; font-size: 20px; letter-spacing: .02em; text-decoration: none; }
+  .a .top nav { display: flex; gap: 22px; font-size: 14px; }
+  .a .top nav a { text-decoration: none; color: var(--cinza); }
+  .a .top nav a:hover { color: var(--azul); }
+
+  .a .abre { padding: 8vh var(--lado) 5vh; }
+  .a h1 { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(88px, 21vw, 330px); line-height: .86; margin: 0; letter-spacing: -.005em; }
+  .a .sub { margin: 18px 0 0; color: var(--cinza); font-size: 15px; }
+
+  .a .macro { margin: 0; }
+  .a .macro img { width: 100%; height: min(78vh, 62vw); object-fit: cover; }
+  .a .macro figcaption { padding: 10px var(--lado); font-size: 13px; color: var(--cinza); }
+
+  .a .rotulo { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 15px; letter-spacing: .08em; color: var(--azul); margin: 0 0 18px; }
+  .a .rotulo.sec { padding: 0 var(--lado); font-size: 18px; }
+
+  .a .bio { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 14vh var(--lado); max-width: 1400px; }
+  .a .bio p { font-size: clamp(19px, 2vw, 25px); line-height: 1.5; margin: 0; max-width: 40ch; }
+  .a .retrato { width: min(100%, 380px); filter: grayscale(1); }
+  @media (min-width: 900px) { .a .bio { grid-template-columns: 1.6fr 1fr; align-items: end; } .a .retrato { justify-self: end; } }
+
+  .a .traj { display: grid; gap: 48px; padding: 0 var(--lado) 16vh; border-top: 1px solid var(--cinza-claro); padding-top: 8vh; }
+  @media (min-width: 900px) { .a .traj { grid-template-columns: 1fr 1fr; } }
+  .a .traj ul { list-style: none; margin: 0; padding: 0; }
+  .a .traj li { display: grid; grid-template-columns: 56px 1fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--cinza-claro); font-size: 15px; line-height: 1.45; }
+  .a .traj b { font-weight: 600; }
+  .a .ano { color: var(--cinza); font-variant-numeric: tabular-nums; }
+
+  .a .serie { padding: 6vh 0 12vh; }
+  .a .serie-head { display: grid; gap: 24px; padding: 0 var(--lado) 8vh; }
+  @media (min-width: 900px) { .a .serie-head { grid-template-columns: 1fr 1fr; align-items: end; } }
+  .a .serie h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; margin: 0; font-size: clamp(44px, 7vw, 104px); line-height: .92; }
+  .a .destaque h3 { font-size: clamp(60px, 11vw, 170px); color: var(--azul); }
+  .a .serie-head p { margin: 0 0 12px; max-width: 52ch; font-size: 16px; }
+  .a .verbete span { display: block; font-size: 14px; color: var(--cinza); font-style: italic; }
+
+  .a .obra { display: grid; gap: 20px; padding: 0 var(--lado); margin-bottom: 14vh; align-items: end; }
+  @media (min-width: 900px) {
+    .a .obra { grid-template-columns: 2.2fr 1fr; gap: 48px; }
+    .a .obra.inv { grid-template-columns: 1fr 2.2fr; }
+    .a .obra.inv .principal { order: 2; }
+  }
+  .a figure { margin: 0; }
+  .a .leg { font-size: 14px; line-height: 1.55; color: var(--cinza); margin: 0 0 20px; }
+  .a .leg b { color: var(--tinta); font-weight: 600; }
+  .a .det img { aspect-ratio: 4/5; object-fit: cover; width: 100%; }
+
+  .a .salao { padding: 0 var(--lado); }
+  .a .grade { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (min-width: 900px) { .a .grade { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+  .a .grade figcaption { font-size: 13px; color: var(--cinza); margin-top: 8px; line-height: 1.45; }
+  .a .grade.menor { padding: 0 var(--lado); }
+  .a .grade.menor figcaption b { color: var(--tinta); font-weight: 600; }
+
+  .a .contato { background: var(--azul); color: #fff; padding: 14vh var(--lado); display: flex; flex-direction: column; gap: 10px; }
+  .a .contato .rotulo { color: #aab6ee; }
+  .a .contato a { font-family: var(--display); text-transform: uppercase; font-size: clamp(30px, 6vw, 80px); line-height: 1.02; text-decoration: none; word-break: break-word; }
+  .a .contato a:hover { text-decoration: underline; text-decoration-thickness: 3px; }
+  .a .pe { padding: 20px var(--lado); font-size: 13px; color: var(--cinza); }
+</style>

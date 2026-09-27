@@ -1,0 +1,35 @@
+---
+// Opção B chrome: small sans header in the gallery-site convention (Mitre, Marcius Galan, Luana Vitra).
+import Base from "../layouts/Base.astro";
+import OpcaoBar from "./OpcaoBar.astro";
+import { u } from "../lib/url";
+interface Props { title: string; atual?: "obras" | "cv" | ""; escuro?: boolean }
+const { title, atual = "", escuro = false } = Astro.props;
+const links = [["obras", "Obras", "b/obras/"], ["cv", "Bio e CV", "b/cv/"]] as const;
+---
+<Base title={title} bodyClass="b">
+  <OpcaoBar atual="b" />
+  <header class:list={["b-top", escuro && "escuro"]}>
+    <a class="b-nome" href={u("b/")}>Jess Duma</a>
+    <nav>
+      {links.map(([k, l, h]) => <a href={u(h)} aria-current={k === atual ? "page" : undefined}>{l}</a>)}
+      <a href={u("b/cv/#contato")}>Contato</a>
+    </nav>
+  </header>
+  <slot />
+</Base>
+
+<style is:global>
+  .b { --lado: clamp(16px, 4vw, 56px); font-family: var(--neutro); font-size: 15px; }
+  .b-top { position: fixed; inset: 0 0 auto; z-index: 10; display: flex; justify-content: space-between; align-items: baseline; padding: 20px var(--lado); }
+  .b-top:not(.escuro) { background: rgba(255,255,255,.94); backdrop-filter: blur(6px); }
+  .b-top.escuro { color: #fff; }
+  .b-nome { font: 400 22px/1 var(--display); text-transform: uppercase; text-decoration: none; letter-spacing: .01em; }
+  .b-top nav { display: flex; gap: 22px; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+  .b-top nav a { text-decoration: none; opacity: .7; }
+  .b-top nav a:hover, .b-top nav a[aria-current] { opacity: 1; }
+  .b-top nav a[aria-current] { border-bottom: 1px solid currentColor; }
+  .b main { padding: 96px var(--lado) 120px; }
+  .b .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--cinza); margin: 0 0 10px; }
+  .b h1.b-h { font: 400 clamp(40px, 6vw, 84px)/.95 var(--display); text-transform: uppercase; margin: 0 0 32px; }
+</style>
