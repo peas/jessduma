@@ -113,8 +113,9 @@ const composicao = (ob: Obra) => ob.tecnica.replace(/ e /, ", ").split(", ");
   // Gentle fade-in when a block enters the screen. Never pins or moves the scroll.
   const io = new IntersectionObserver((es) => {
     for (const e of es) if (e.isIntersecting) { e.target.classList.add("vis"); io.unobserve(e.target); }
-  }, { rootMargin: "0px 0px -10% 0px" });
+  }, { rootMargin: "0px 0px 15% 0px" });
   document.querySelectorAll(".revela").forEach((el) => io.observe(el));
+  document.documentElement.classList.add("io");
 
   // Loupe: a round lens that shows the 2400px file under the cursor (fine pointers only).
   if (matchMedia("(pointer: fine)").matches) {
@@ -162,10 +163,9 @@ const composicao = (ob: Obra) => ob.tecnica.replace(/ e /, ", ").split(", ");
   .c .peca-det img { width: 100%; height: min(82svh, 66vw); object-fit: cover; }
   .c .peca-obra { display: grid; justify-items: center; gap: 28px; padding: 0 var(--lado); }
   @media (min-width: 900px) { .c .peca-obra { grid-template-columns: 1fr 300px; justify-items: stretch; align-items: center; gap: 6vw; } }
-  .c .revela { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
-  .c .revela.vis { opacity: 1; transform: none; }
-  .c .peca-det.revela img { transform: scale(1.06); transition: transform 1.6s ease; }
-  .c .peca-det.vis img { transform: none; }
+  /* fade only when the script is alive (html.io); without JS everything is simply visible */
+  .io .c .revela { opacity: 0; transition: opacity .8s ease; }
+  .io .c .revela.vis { opacity: 1; }
   .c .lupa-alvo { position: relative; justify-self: center; cursor: none; }
   .c .lupa-alvo img { max-height: 76svh; width: auto; }
   .c .lupa { position: absolute; width: 220px; height: 220px; border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%) scale(.6); opacity: 0; transition: opacity .2s, transform .2s; background-repeat: no-repeat; box-shadow: 0 0 0 1px rgba(255,255,255,.7), 0 10px 40px rgba(0,0,0,.35); }
@@ -206,6 +206,6 @@ const composicao = (ob: Obra) => ob.tecnica.replace(/ e /, ", ").split(", ");
   .c .contato a { color: #fff; text-decoration: none; font: 400 clamp(30px, 6vw, 84px)/1.05 var(--display); text-transform: uppercase; word-break: break-word; }
 
   @media (prefers-reduced-motion: reduce) {
-    .c .revela, .c .peca-det.revela img { opacity: 1; transform: none; transition: none; }
+    .io .c .revela { opacity: 1; transition: none; }
   }
 </style>
