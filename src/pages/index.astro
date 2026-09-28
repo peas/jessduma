@@ -1,125 +1,192 @@
 ---
-// Proposal landing for Jess: the brief as heard in her audios, three directions, what the research
-// found and what is still open. Once a direction is picked, this page becomes the real home.
+// Home = Opção A "Parede branca", chosen by Jess on 2026-09-27 (audio 21:20), with her changes:
+// cover = the B close-up (Biópsia do Grito) with the name in black Anton on one line and the work
+// title beside it; B's menu (Obras · Bio e CV · Contato) with bio/CV moved to the end; the C phrase
+// kept as the statement. Only her two families: Anton + Hanken Grotesk (stand-in for Hagrid Text).
 import Base from "../layouts/Base.astro";
 import Foto from "../components/Foto.astro";
-import { u } from "../lib/url";
+import Lightbox from "../components/Lightbox.astro";
+import { artista, series, exposicoes, formacao, legenda, type Obra } from "../data/obras";
 
-const opcoes = [
-  {
-    k: "a", nome: "Parede branca", foto: "capa-detalhe", tag: "O que você pediu",
-    txt: "Seguindo o seu briefing à risca: uma página só, seu nome grande em Anton, um detalhe de obra bem de perto (como na Mitre), bio, trajetória, as séries com Drogas Modernas em destaque e os contatos no fim, em azul profundo. Cada obra aparece inteira ao lado de um detalhe, como na referência da Alissa Cica.",
-    pontos: ["Uma página, rolagem simples", "Clique em qualquer foto para ampliar", "Mais próxima do seu portfólio em PDF"],
-  },
-  {
-    k: "b", nome: "Galeria", foto: "biopsia-do-grito-detalhe", tag: "O que a pesquisa mostrou",
-    txt: "O formato que artistas representados por galerias usam (Marcius Galan, Luana Vitra, Tauba Auerbach, a própria Mitre): a home é uma única foto de detalhe em tela cheia, as obras ficam num índice por série, e cada obra tem a sua página, com todas as fotos, a ficha técnica em cm e em polegadas e um botão para consultar a obra por e-mail.",
-    pontos: ["Várias páginas: obras, obra individual, bio e CV", "Link de cada obra para mandar a colecionadores e curadores", "É o que galerias e colecionadores esperam encontrar"],
-  },
-  {
-    k: "c", nome: "Matéria", foto: "capa", tag: "Uma aposta",
-    txt: "A textura como protagonista. Abre como a capa do seu portfólio. Em Drogas Modernas, cada obra aparece primeiro como um detalhe em tela cheia e, conforme a pessoa rola, se afasta até mostrar a peça inteira na parede. Passando o mouse, uma lupa revela a superfície do metal e da resina. A ficha técnica é composta como uma bula: \"Composição: alumínio, cianotipia, cloridrato de lurasidona, resina\".",
-    pontos: ["Uma página, com movimento no scroll", "Lupa sobre a foto (no computador)", "Conversa com o tema da série"],
-  },
-];
-
-const ouvido = [
-  "Clean e chique, fundo branco como parede de galeria, atenção total nas fotos das obras",
-  "Anton nos destaques (nome, títulos) e Hagrid Text nos textos",
-  "Cinza, branco, preto de base e um azul profundo, meio galáctico, em alguns detalhes",
-  "Nome em destaque, bio, lugares por onde você passou, séries e contatos",
-  "Drogas Modernas com mais destaque que des.útil",
-  "Uma imagem de detalhe bem de perto, como na Galeria Mitre, para mostrar a textura",
-  "Metal, química, corrosão: que o site transmita isso, mas sempre limpo",
-];
-
-const pesquisa = [
-  ["Detalhe + obra inteira lado a lado", "Alissa Cica (sua referência) faz isso em quase toda obra; a Mitre abre as páginas de artista com um close em tela cheia."],
-  ["Uma página por obra", "Luana Vitra e Marcius Galan: várias fotos da mesma obra e a legenda completa. Fica fácil mandar o link de uma obra específica."],
-  ["Medidas em cm e polegadas", "Marcius Galan e Tauba Auerbach. Colecionador estrangeiro lê em polegadas."],
-  ["CV em texto, não só em PDF", "Com as seções de costume (formação, exposições coletivas, individuais, prêmios, residências)."],
-  ["Versão em inglês", "Marcius Galan, Luana Vitra, Laura Vinci e Ana Maria Tavares têm PT/EN. Alissa Cica só tem PT."],
-  ["Contato direto", "Ninguém usa botão de \"comprar\": a consulta é por e-mail (ou pela galeria, quando há)."],
-];
-
-const pendencias = [
-  "Qual foto de detalhe você escolheu para o destaque (você comentou que ia mandar). Por enquanto usei detalhes do portfólio.",
-  "O e-mail novo: os protótipos usam o atual (jessduma.di@gmail.com). Telefone ficou de fora de propósito, para não virar alvo de spam. Quer incluir?",
-  "Fonte dos textos: a Hagrid Text é paga (Zetafonts) e a licença do Canva não cobre uso em site. Usei a Hanken Grotesk, gratuita e parecida. Se você tiver ou comprar a licença web, trocamos.",
-  "Versão em inglês: vale fazer já na primeira versão?",
-  "Domínio: jessduma.com.br ou jessduma.com (hoje está em peas.github.io/jessduma).",
-  "Os textos das séries no portfólio usam \"o artista\". Aqui troquei por construções neutras (\"de Jess\", \"busca\"), como na sua bio. Confere se prefere assim.",
-];
+const [drogas, ...outras] = series;
+const cap = (ob: Obra) => `JESS DUMA. ${ob.titulo}, ${ob.ano}. Série: ${ob.serie}. ${legenda(ob)}`;
+// Big works get the full wall; small ones (5x5 cm dípticos) sit in a grid, like a salon hang.
+const afinidades = drogas.obras.filter((x) => x.slug.startsWith("afinidade"));
+const grandes = drogas.obras.filter((x) => !x.slug.startsWith("afinidade"));
 ---
-<Base title="Jess Duma · três propostas de site" bodyClass="home">
-  <header class="h-top">
-    <p class="h-kicker">Proposta de site · setembro de 2026</p>
-    <h1>Jess Duma</h1>
-    <p class="h-lead">Três caminhos para o seu site, montados com as obras e os textos do portfólio 2026. Abra cada um, role até o fim e veja no celular também. Dá para misturar: pegar a estrutura de um e um detalhe do outro.</p>
+<Base title="Jess Duma" bodyClass="a">
+  <header class="top">
+    <a href="#inicio" class="marca">Jess Duma</a>
+    <nav>
+      <a href="#obras">Obras</a>
+      <a href="#bio">Bio e CV</a>
+      <a href="#contato">Contato</a>
+    </nav>
   </header>
 
-  <section class="h-ops">
-    {opcoes.map((o) => (
-      <a class="h-op" href={u(`${o.k}/`)}>
-        <div class="h-op-img"><Foto name={o.foto} alt="" sizes="(min-width: 1000px) 32vw, 100vw" widths={[480, 960, 1600]} /></div>
-        <p class="h-op-tag">{o.k.toUpperCase()} · {o.tag}</p>
-        <h2>{o.nome}</h2>
-        <p class="h-op-txt">{o.txt}</p>
-        <ul>{o.pontos.map((p) => <li>{p}</li>)}</ul>
-        <span class="h-op-go">Abrir opção {o.k.toUpperCase()} →</span>
-      </a>
-    ))}
-  </section>
+  <main id="inicio">
+    <section class="capa">
+      <figure class="capa-foto" data-zoom data-caption="JESS DUMA. Biópsia do Grito, 2026. Série: Drogas Modernas. Detalhe.">
+        <Foto name="biopsia-do-grito-detalhe" alt="Biópsia do Grito, 2026, detalhe: alumínio, cianotipia, cloridrato de lurasidona e resina" eager />
+      </figure>
+      <h1>Jess Duma</h1>
+      <p class="capa-obra"><i>Biópsia do Grito</i>, 2026<br />detalhe</p>
+    </section>
 
-  <section class="h-duas">
-    <div>
-      <h2 class="h-sec">O que eu ouvi nos seus áudios</h2>
-      <ul class="h-lista">{ouvido.map((x) => <li>{x}</li>)}</ul>
-    </div>
-    <div>
-      <h2 class="h-sec">O que a pesquisa mostrou</h2>
-      <p class="h-nota">Olhei a sua referência, a Mitre e sites de artistas brasileiros e de fora (Marcius Galan, Luana Vitra, Laura Vinci, Rosana Paulino, José Bechara, Tauba Auerbach, Anish Kapoor, Julian Charrière, Meghann Riepenhoff, Tony Cragg).</p>
-      <dl class="h-pesq">{pesquisa.map(([t, d]) => <><dt>{t}</dt><dd>{d}</dd></>)}</dl>
-    </div>
-  </section>
+    <section class="frase">
+      <p>Sua prática mapeia os rastros das relações: <em>entre corpos, espaços e o cotidiano.</em></p>
+    </section>
 
-  <section class="h-pend">
-    <h2 class="h-sec">Para decidir com você</h2>
-    <ol>{pendencias.map((p) => <li>{p}</li>)}</ol>
-  </section>
+    <section id="obras">
+      <h2 class="rotulo sec">Obras</h2>
+
+      <article class="serie destaque">
+        <header class="serie-head">
+          <h3>{drogas.nome}</h3>
+          <div>{drogas.texto.map((t) => <p>{t}</p>)}</div>
+        </header>
+
+        {grandes.map((ob, i) => (
+          <div class:list={["obra", i % 2 && "inv"]}>
+            <figure class="principal" data-zoom data-caption={cap(ob)}>
+              <Foto name={ob.principal} alt={`${ob.titulo}, ${ob.ano}`} sizes="(min-width: 900px) 62vw, 100vw" />
+            </figure>
+            <div class="lado">
+              <p class="leg"><b>{ob.titulo}</b>, {ob.ano}<br />{ob.tecnica}<br />{ob.dimensoes}{ob.formato && <> · {ob.formato}</>}</p>
+              {ob.detalhes.slice(0, 1).map((d) => (
+                <figure class="det" data-zoom data-caption={`JESS DUMA. ${ob.titulo}, ${ob.ano}. Detalhe.`}>
+                  <Foto name={d} alt={`${ob.titulo}, detalhe`} sizes="(min-width: 900px) 28vw, 100vw" />
+                </figure>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <div class="salao">
+          <p class="leg"><b>Afinidade D2</b>, 2026 · seis dípticos<br />Alumínio, cianotipia, venlafaxina ou cloridrato de bupropiona e resina · 5 x 5 cm cada</p>
+          <div class="grade">
+            {afinidades.map((ob) => (
+              <figure data-zoom data-caption={cap(ob)}>
+                <Foto name={ob.principal} alt={ob.titulo} sizes="(min-width: 900px) 30vw, 50vw" widths={[480, 960, 1600]} />
+                <figcaption>{ob.titulo}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </article>
+
+      {outras.map((s) => (
+        <article class="serie">
+          <header class="serie-head">
+            <h3>{s.nome}</h3>
+            <div>
+              {s.verbete && <p class="verbete">{s.verbete.map((v) => <span>{v}</span>)}</p>}
+              {s.texto.map((t) => <p>{t}</p>)}
+            </div>
+          </header>
+          <div class="grade menor">
+            {s.obras.map((ob) => (
+              <figure data-zoom data-caption={cap(ob)}>
+                <Foto name={ob.principal} alt={`${ob.titulo}, ${ob.ano}`} sizes="(min-width: 900px) 30vw, 100vw" widths={[480, 960, 1600]} />
+                <figcaption><b>{ob.titulo}</b>, {ob.ano}<br />{ob.tecnica} · {ob.dimensoes}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section id="bio" class="bio">
+      <div class="bio-txt">
+        <h2 class="rotulo">Bio</h2>
+        <p>{artista.bio}</p>
+      </div>
+      <Foto name="retrato" alt="Retrato de Jess Duma em preto e branco" sizes="(min-width: 900px) 30vw, 80vw" widths={[480, 960]} class="retrato" />
+    </section>
+
+    <section class="traj">
+      <div>
+        <h2 class="rotulo">Exposições coletivas</h2>
+        <ul>{exposicoes.map((e) => <li><span class="ano">{e.ano}</span><span><b>{e.titulo}</b>{e.local && <>, {e.local}</>}</span></li>)}</ul>
+      </div>
+      <div>
+        <h2 class="rotulo">Formação e grupos</h2>
+        <ul>{formacao.map((e) => <li><span class="ano">{e.ano}</span><span><b>{e.titulo}</b>{e.local && <>, {e.local}</>}</span></li>)}</ul>
+      </div>
+    </section>
+
+    <section id="contato" class="contato">
+      <h2 class="rotulo">Contato</h2>
+      <a href={`mailto:${artista.email}`}>{artista.email}</a>
+      <a href={`https://instagram.com/${artista.instagram}`}>@{artista.instagram}</a>
+    </section>
+  </main>
+  <footer class="pe">© Jess Duma 2026</footer>
+  <Lightbox />
 </Base>
 
 <style is:global>
-  .home { --lado: clamp(16px, 5vw, 72px); }
-  .h-top { padding: 12vh var(--lado) 8vh; max-width: 1200px; }
-  .h-kicker { font: 500 12px var(--neutro); text-transform: uppercase; letter-spacing: .14em; color: var(--azul-vivo); margin: 0 0 16px; }
-  .home h1 { font: 400 clamp(72px, 14vw, 200px)/.86 var(--display); text-transform: uppercase; margin: 0 0 32px; }
-  .h-lead { font-size: clamp(18px, 1.8vw, 23px); line-height: 1.5; max-width: 50ch; margin: 0; }
+  .a { --lado: clamp(16px, 5vw, 72px); }
+  .a .top { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: 16px var(--lado); background: rgba(255,255,255,.92); backdrop-filter: blur(8px); }
+  .a .marca { font-family: var(--display); text-transform: uppercase; font-size: 20px; letter-spacing: .02em; text-decoration: none; }
+  .a .top nav { display: flex; gap: 22px; font-size: 14px; }
+  .a .top nav a { text-decoration: none; color: var(--cinza); }
+  .a .top nav a:hover { color: var(--azul); }
 
-  .h-ops { display: grid; gap: 56px; padding: 0 var(--lado) 14vh; }
-  @media (min-width: 1000px) { .h-ops { grid-template-columns: repeat(3, 1fr); gap: 36px; } }
-  .h-op { display: flex; flex-direction: column; text-decoration: none; }
-  .h-op-img { overflow: hidden; aspect-ratio: 4/3; background: #eee; margin-bottom: 20px; }
-  .h-op-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
-  .h-op:hover .h-op-img img { transform: scale(1.04); }
-  .h-op-tag { font: 500 11px var(--neutro); text-transform: uppercase; letter-spacing: .14em; color: var(--cinza); margin: 0 0 8px; }
-  .h-op h2 { font: 400 44px/1 var(--display); text-transform: uppercase; margin: 0 0 14px; }
-  .h-op-txt { font-size: 16px; margin: 0 0 14px; }
-  .h-op ul { margin: 0 0 20px; padding-left: 18px; color: var(--cinza); font-size: 14px; }
-  .h-op-go { margin-top: auto; align-self: flex-start; padding: 11px 18px; background: var(--tinta); color: #fff; font: 500 13px var(--neutro); letter-spacing: .04em; transition: background .2s; }
-  .h-op:hover .h-op-go { background: var(--azul); }
+  /* cover: the close-up with the name in black Anton, one line, over the light wall/aluminium */
+  .a .capa { position: relative; }
+  .a .capa-foto { margin: 0; }
+  .a .capa-foto img { width: 100%; height: calc(100svh - 58px); min-height: 420px; object-fit: cover; object-position: 35% 50%; }
+  .a .capa h1 { position: absolute; top: clamp(20px, 5vh, 56px); left: var(--lado); margin: 0; font: 400 clamp(52px, 10.5vw, 176px)/.9 var(--display); text-transform: uppercase; white-space: nowrap; color: var(--tinta); pointer-events: none; }
+  .a .capa-obra { position: absolute; left: var(--lado); bottom: 22px; margin: 0; font-size: 13px; line-height: 1.4; color: var(--tinta); pointer-events: none; }
+  .a .frase { padding: 18vh var(--lado) 16vh; max-width: 1300px; }
+  .a .frase p { margin: 0; font-size: clamp(28px, 4.2vw, 64px); line-height: 1.12; letter-spacing: -.015em; }
+  .a .frase em { font-style: normal; color: var(--azul); }
 
-  .h-sec { font: 400 28px/1 var(--display); text-transform: uppercase; margin: 0 0 20px; }
-  .h-duas { display: grid; gap: 56px; padding: 10vh var(--lado); background: #f4f4f5; }
-  @media (min-width: 1000px) { .h-duas { grid-template-columns: 1fr 1.3fr; gap: 6vw; } }
-  .h-lista { margin: 0; padding-left: 18px; font-size: 16px; }
-  .h-lista li { margin-bottom: 8px; }
-  .h-nota { color: var(--cinza); font-size: 14px; margin: 0 0 20px; }
-  .h-pesq { margin: 0; }
-  .h-pesq dt { font-weight: 600; margin-top: 14px; }
-  .h-pesq dd { margin: 2px 0 0; font-size: 15px; color: #333; }
+  .a .rotulo { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 15px; letter-spacing: .08em; color: var(--azul); margin: 0 0 18px; }
+  .a .rotulo.sec { padding: 0 var(--lado); font-size: 18px; }
 
-  .h-pend { padding: 10vh var(--lado) 14vh; max-width: 900px; }
-  .h-pend ol { padding-left: 22px; margin: 0; }
-  .h-pend li { margin-bottom: 12px; font-size: 16px; }
+  .a .bio { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 12vh var(--lado) 10vh; max-width: 1400px; border-top: 1px solid var(--cinza-claro); }
+  .a .bio p { font-size: clamp(19px, 2vw, 25px); line-height: 1.5; margin: 0; max-width: 40ch; }
+  .a .retrato { width: min(100%, 380px); filter: grayscale(1); }
+  @media (min-width: 900px) { .a .bio { grid-template-columns: 1.6fr 1fr; align-items: end; } .a .retrato { justify-self: end; } }
+
+  .a .traj { display: grid; gap: 48px; padding: 0 var(--lado) 16vh; border-top: 1px solid var(--cinza-claro); padding-top: 8vh; }
+  @media (min-width: 900px) { .a .traj { grid-template-columns: 1fr 1fr; } }
+  .a .traj ul { list-style: none; margin: 0; padding: 0; }
+  .a .traj li { display: grid; grid-template-columns: 56px 1fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--cinza-claro); font-size: 15px; line-height: 1.45; }
+  .a .traj b { font-weight: 600; }
+  .a .ano { color: var(--cinza); font-variant-numeric: tabular-nums; }
+
+  .a .serie { padding: 6vh 0 12vh; }
+  .a .serie-head { display: grid; gap: 24px; padding: 0 var(--lado) 8vh; }
+  @media (min-width: 900px) { .a .serie-head { grid-template-columns: 1fr 1fr; align-items: end; } }
+  .a .serie h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; margin: 0; font-size: clamp(44px, 7vw, 104px); line-height: .92; }
+  .a .destaque h3 { font-size: clamp(60px, 11vw, 170px); color: var(--azul); }
+  .a .serie-head p { margin: 0 0 12px; max-width: 52ch; font-size: 16px; }
+  .a .verbete span { display: block; font-size: 14px; color: var(--cinza); font-style: italic; }
+
+  .a .obra { display: grid; gap: 20px; padding: 0 var(--lado); margin-bottom: 14vh; align-items: end; }
+  @media (min-width: 900px) {
+    .a .obra { grid-template-columns: 2.2fr 1fr; gap: 48px; }
+    .a .obra.inv { grid-template-columns: 1fr 2.2fr; }
+    .a .obra.inv .principal { order: 2; }
+  }
+  .a figure { margin: 0; }
+  .a .leg { font-size: 14px; line-height: 1.55; color: var(--cinza); margin: 0 0 20px; }
+  .a .leg b { color: var(--tinta); font-weight: 600; }
+  .a .det img { aspect-ratio: 4/5; object-fit: cover; width: 100%; }
+
+  .a .salao { padding: 0 var(--lado); }
+  .a .grade { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (min-width: 900px) { .a .grade { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+  .a .grade figcaption { font-size: 13px; color: var(--cinza); margin-top: 8px; line-height: 1.45; }
+  .a .grade.menor { padding: 0 var(--lado); }
+  .a .grade.menor figcaption b { color: var(--tinta); font-weight: 600; }
+
+  .a .contato { background: var(--azul); color: #fff; padding: 14vh var(--lado); display: flex; flex-direction: column; gap: 10px; }
+  .a .contato .rotulo { color: #aab6ee; }
+  .a .contato a { font-family: var(--display); text-transform: uppercase; font-size: clamp(30px, 6vw, 80px); line-height: 1.02; text-decoration: none; word-break: break-word; }
+  .a .contato a:hover { text-decoration: underline; text-decoration-thickness: 3px; }
+  .a .pe { padding: 20px var(--lado); font-size: 13px; color: var(--cinza); }
 </style>

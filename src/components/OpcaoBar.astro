@@ -6,8 +6,8 @@ const { atual } = Astro.props;
 const ops = [["a", "A"], ["b", "B"], ["c", "C"]] as const;
 ---
 <nav class="opbar" aria-label="Opções de site">
-  <a href={u("")} class="op-home">propostas</a>
-  {ops.map(([k, l]) => <a href={u(`${k}/`)} aria-current={k === atual ? "page" : undefined}>{l}</a>)}
+  <a href={u("propostas/")} class="op-home">propostas</a>
+  {ops.map(([k, l]) => <a href={u(k === "a" ? "" : `${k}/`)} aria-current={k === atual ? "page" : undefined}>{l}</a>)}
 </nav>
 <style is:global>
   .opbar { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; gap: 2px; padding: 4px; background: #0b0b0c; border-radius: 999px; font: 500 12px/1 var(--neutro); box-shadow: 0 4px 18px rgba(0,0,0,.18); }

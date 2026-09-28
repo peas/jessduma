@@ -19,16 +19,16 @@ over des.útil), a Galeria Mitre-style close-up detail image, contacts. One page
 steel, aluminum, cyanotype, resin, psychiatric medication; future: brass. "I need to appeal to rich people."
 Her one reference: readymag.website/u458517943/alissacica/ (macro detail next to the whole work).
 
-## Phase: proposal (set/2026)
-`/` is a landing for Jess comparing three directions; each has a floating switcher (`OpcaoBar`):
-- `/a/` **Parede branca**: the brief to the letter, one page.
-- `/b/` **Galeria**: gallery-site convention from the research (Mitre, Marcius Galan, Luana Vitra, Tauba
-  Auerbach): close-up home, text index by series, one page per work (`/b/obras/<slug>/`, cm + inches,
-  mailto inquiry), Bio e CV page.
-- `/c/` **Matéria**: texture first: cover = portfolio cover crop, scroll-driven detail → whole work, loupe
-  on hover, caption set like a medication leaflet ("Composição").
-All pages are `noindex` (Base.astro) during this phase. Once she picks: the chosen option becomes `/`,
-drop the others and `OpcaoBar`, remove noindex, set `site` (and drop `base`) in astro.config.mjs.
+## Phase: Jess chose A (2026-09-27, audio 21:20)
+`/` is now Opção A with her changes: cover = Biópsia do Grito close-up (the one from B) with "JESS DUMA"
+in black Anton on one line and the work title beside it; B's menu (Obras · Bio e CV · Contato), bio and
+CV at the end; the phrase from C ("Sua prática mapeia os rastros das relações...") as the statement.
+She complained the fonts were missing: they load, but only Anton + the Hagrid stand-in may appear on her
+site (no Instrument Sans), and Anton is preloaded in Base.astro to avoid a fallback flash on mobile.
+- `/propostas/` keeps the three-option comparison; `/a/` redirects to `/`; `/b/` and `/c/` stay online
+  (reversible) with the floating `OpcaoBar`. Delete them once the site is final.
+- Still `noindex` (Base.astro) until she approves the final version; then remove it and set `site`
+  (dropping `base`) in astro.config.mjs when there is a domain.
 
 ## Data
 - `src/data/obras.ts` is the single source: bio, series, works, exhibitions, training. Every page reads it.

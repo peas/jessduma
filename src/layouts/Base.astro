@@ -3,6 +3,8 @@ import "@fontsource/anton";
 import "@fontsource-variable/hanken-grotesk";
 import "@fontsource-variable/instrument-sans";
 import "../styles/base.css";
+// Preload Anton so the name never flashes in a fallback font (Jess saw the fonts "missing" on mobile).
+import antonLatin from "@fontsource/anton/files/anton-latin-400-normal.woff2?url";
 
 interface Props {
   title: string;
@@ -18,6 +20,7 @@ const { title, description = "Jess Duma, artista visual. São Paulo.", bodyClass
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- proposal phase: keep out of search engines until Jess picks a direction -->
     <meta name="robots" content="noindex, nofollow" />
+    <link rel="preload" href={antonLatin} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='9' fill='%2314215c'/></svg>" />
