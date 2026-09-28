@@ -135,6 +135,5 @@ export const formacao = [
   { ano: 2026, titulo: "Ateliê de Arte e Psicanálise com Flavia Corpas e Marcela Schwab", local: "Canteiro, São Paulo" },
   { ano: 2025, titulo: "Projetos Culturais", local: "Instituto Arlequim, São Paulo" },
   { ano: 2025, titulo: "Escrita Criativa: Técnicas e Práticas", local: "PUCRS" },
-  { ano: 2014, titulo: "Artista visual multidisciplinar autodidata", local: "" },
   { ano: 2011, titulo: "Design de Interiores", local: "UNICURITIBA, Curitiba" },
 ];

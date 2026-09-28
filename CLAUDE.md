@@ -12,8 +12,8 @@ builds it as a favor; Jess reviews it in rounds and Paulo relays the feedback. A
 
 ## Brief (Jess's audios, 27/09/2026)
 Clean and chic; white background like a gallery wall; focus on the work photos. Fonts: **Anton** (name,
-titles) + **Hagrid Text** (body; paid Zetafonts font, stand-in = Hanken Grotesk until there is a web
-license). Colors: gray, white, black as the base, and a deep "galactic" blue for details (`--azul`
+titles) + **Aileron** (body and contact info; public domain, @fontsource/aileron). She first asked for
+Hagrid Text (paid) and switched to Aileron on 2026-09-28. Colors: gray, white, black as the base, and a deep "galactic" blue for details (`--azul`
 `#14215c`). Order: name, bio, trajectory (exhibitions + training), series (Drogas Modernas has priority
 over des.útil), a Galeria Mitre-style close-up detail image, contacts. One page is fine. Materials: stainless
 steel, aluminum, cyanotype, resin, psychiatric medication; future: brass. "I need to appeal to rich people."
@@ -29,6 +29,11 @@ site (no Instrument Sans), and Anton is preloaded in Base.astro to avoid a fallb
   (reversible) with the floating `OpcaoBar`. Delete them once the site is final.
 - Still `noindex` (Base.astro) until she approves the final version; then remove it and set `site`
   (dropping `base`) in astro.config.mjs when there is a domain.
+
+Round 2 (2026-09-28): cover back to the C cover (dark macro, white name); text and contact info in
+Aileron (contact ~half the old size, the "Contato" label stays Anton); series titles black, line-height
+1.02; "2014 Artista visual multidisciplinar autodidata" removed from the CV. The cover photo is the
+portfolio cover (strips of a Saturação polyptych, I or II not confirmed), so its caption only names the series.
 
 ## Data
 - `src/data/obras.ts` is the single source: bio, series, works, exhibitions, training. Every page reads it.
