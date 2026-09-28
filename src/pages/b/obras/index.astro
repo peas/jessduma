@@ -8,7 +8,7 @@ import { u } from "../../../lib/url";
 <BShell title="Obras · Jess Duma · Opção B" atual="obras">
   <main class="idx">
     {series.map((s, i) => (
-      <section class:list={["idx-serie", i === 0 && "atual"]}>
+      <section id={s.slug} class:list={["idx-serie", i === 0 && "atual"]}>
         <div class="idx-head">
           <p class="eyebrow">{i === 0 ? "Série em curso" : "Série"}</p>
           <h2>{s.nome}</h2>
@@ -34,7 +34,7 @@ import { u } from "../../../lib/url";
 <style is:global>
   .idx-serie { display: grid; gap: 28px; padding: 40px 0 80px; border-top: 1px solid var(--cinza-claro); }
   .idx-serie:first-child { border-top: 0; }
-  @media (min-width: 960px) { .idx-serie { grid-template-columns: 1fr 2fr; gap: 5vw; } .idx-head { position: sticky; top: 90px; align-self: start; } }
+  @media (min-width: 960px) { .idx-serie { grid-template-columns: 1fr 2fr; gap: 5vw; } .idx-head { position: sticky; top: 80px; align-self: start; } }
   .idx-head h2 { font: 400 clamp(36px, 4.6vw, 64px)/.95 var(--display); text-transform: uppercase; margin: 0 0 18px; }
   .idx-serie.atual h2 { color: var(--azul); }
   .idx-txt { color: #444; max-width: 46ch; margin: 0; line-height: 1.6; }

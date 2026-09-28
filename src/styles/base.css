@@ -13,7 +13,9 @@
   color-scheme: light;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+/* room for the floating proposals switcher (OpcaoBar) at the end of every page */
+body { padding-bottom: 64px; }
 body {
   margin: 0;
   background: var(--parede);

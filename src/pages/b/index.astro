@@ -1,21 +1,47 @@
 ---
-// Opção B home: one full-screen close-up, like Mitre Galeria's artist pages. Nothing else.
+// Opção B home: a large close-up up top (Mitre Galeria's artist pages), then the series as entry
+// points. A normal scrolling page: the photo is not a link, so a touch to scroll never navigates.
 import BShell from "../../components/BShell.astro";
 import Foto from "../../components/Foto.astro";
+import { series } from "../../data/obras";
 import { u } from "../../lib/url";
 ---
-<BShell title="Jess Duma · Opção B" escuro>
-  <a class="b-hero" href={u("b/obras/")}>
+<BShell title="Jess Duma · Opção B">
+  <figure class="b-hero">
     <Foto name="biopsia-do-grito-detalhe" alt="Biópsia do Grito, 2026, detalhe" eager />
-    <span class="b-hero-leg">Biópsia do Grito, 2026 · detalhe · <u>ver obras</u></span>
-  </a>
+    <figcaption>Biópsia do Grito, 2026 · detalhe</figcaption>
+  </figure>
+
+  <main class="b-home">
+    <p class="eyebrow">Séries</p>
+    <ul class="b-series">
+      {series.map((s, i) => (
+        <li>
+          <a href={u(`b/obras/#${s.slug}`)}>
+            <Foto name={s.obras[0].principal} alt="" sizes="(min-width: 900px) 30vw, 100vw" widths={[480, 960]} />
+            <span class:list={["b-s-nome", i === 0 && "atual"]}>{s.nome}</span>
+            <span class="b-s-n">{s.obras.length} {s.obras.length === 1 ? "obra" : "obras"}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a class="b-todas" href={u("b/obras/")}>Ver todas as obras →</a>
+  </main>
 </BShell>
 
 <style is:global>
-  .b-hero { position: fixed; inset: 0; display: block; background: #111; }
-  .b-hero img { width: 100%; height: 100%; object-fit: cover; }
-  .b-hero-leg { position: absolute; left: var(--lado); bottom: 24px; font-size: 12px; letter-spacing: .06em; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.4); }
-  .b-hero-leg u { text-underline-offset: 3px; }
-  /* the macro is light: header text needs to stay legible */
-  .b-top.escuro { color: #0b0b0c; }
+  .b-hero { margin: 0; }
+  .b-hero img { width: 100%; height: calc(100svh - 150px); min-height: 320px; object-fit: cover; }
+  .b-hero figcaption { padding: 10px var(--lado) 0; font-size: 12px; color: var(--cinza); }
+  .b-home { padding-top: 64px; }
+  .b-series { list-style: none; margin: 0 0 40px; padding: 0; display: grid; gap: 32px; }
+  @media (min-width: 900px) { .b-series { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+  .b-series a { display: flex; flex-direction: column; gap: 8px; text-decoration: none; }
+  .b-series img { width: 100%; aspect-ratio: 3/2; object-fit: cover; }
+  .b-s-nome { font: 400 30px/1 var(--display); text-transform: uppercase; margin-top: 6px; }
+  .b-s-nome.atual { color: var(--azul); }
+  .b-s-n { font-size: 13px; color: var(--cinza); }
+  .b-series a:hover .b-s-nome { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .b-todas { display: inline-block; padding: 12px 18px; border: 1px solid var(--tinta); text-decoration: none; font-size: 13px; }
+  .b-todas:hover { background: var(--azul); border-color: var(--azul); color: #fff; }
 </style>
