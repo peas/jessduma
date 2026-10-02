@@ -8,7 +8,8 @@ Os textos do site ficam nesta pasta, um arquivo para cada parte. Para mudar algu
 4. Clique no botão verde **Commit changes...**, escreva o que mudou (ex.: "corrige bio") e confirme.
 
 Em uns 2 minutos o site jessduma.com.br atualiza sozinho. Se algo estiver fora do formato, o site
-**não quebra**: ele continua com a versão anterior, e o Paulo recebe um aviso.
+**não quebra**: ele continua com a versão anterior, e o GitHub manda um e-mail avisando que falhou
+em "build". Aí é só desfazer a última mudança ou chamar o Paulo.
 
 | Arquivo | O que é |
 |---|---|
