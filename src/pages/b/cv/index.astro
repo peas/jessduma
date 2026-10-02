@@ -3,6 +3,7 @@
 import BShell from "../../../components/BShell.astro";
 import Foto from "../../../components/Foto.astro";
 import { artista, exposicoes, formacao } from "../../../data/obras";
+import { semMarcas } from "../../../lib/textos";
 ---
 <BShell title="Bio e CV · Jess Duma · Opção B" atual="cv">
   <main class="cv">
@@ -11,7 +12,7 @@ import { artista, exposicoes, formacao } from "../../../data/obras";
       <div>
         <h1 class="b-h">Jess Duma</h1>
         <p class="eyebrow">Paraná · vive e trabalha em São Paulo</p>
-        <p class="cv-txt">{artista.bio}</p>
+        {artista.bio.map((t) => <p class="cv-txt">{semMarcas(t)}</p>)}
       </div>
     </section>
 

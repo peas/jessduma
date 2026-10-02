@@ -38,7 +38,11 @@ Aileron (contact ~half the old size, the "Contato" label stays Anton); series ti
 portfolio cover (strips of a Saturação polyptych, I or II not confirmed), so its caption only names the series.
 
 ## Data
-- `src/data/obras.ts` is the single source: bio, series, works, exhibitions, training. Every page reads it.
+- `src/data/obras.ts` is the single source every page reads. Its prose comes from **`textos/*.md`** (bio, statement
+  phrase, series texts, `cv.md` with exhibitions/training), plain Markdown so Jess can edit on GitHub without
+  touching code (`textos/README.md` is her guide, in Portuguese). Parsed by `src/lib/textos.ts`: paragraphs,
+  `*italic*`, and `- year — title — place` lines; malformed input fails the build with the file and line.
+  Work data (titles, technique, sizes, photos) stays in `obras.ts`. Option for later: Sveltia CMS on `/admin`.
 - Photos: `src/assets/obras/*.jpg`, extracted from the portfolio PDF by
   `python3 scripts/import-portfolio.py <pdf>` (mapping page/index -> name inside the script; `--help`).
   Astro builds the responsive webp versions (`Foto.astro`). New portfolio = update MAP and rerun.

@@ -1,0 +1,3 @@
+Esta série parte de agendas pessoais da infância e adolescência da artista combinadas a registros cotidianos feitos com uma câmera dos anos 2000. Ao ativar esses arquivos íntimos, o trabalho apresenta o tempo como sobreposição de camadas, deslocando a importância para além dos grandes marcos históricos.
+
+As imagens, impressas em impressora doméstica, resgatam o hábito de colar, escrever e acumular lembranças. Entre afetos e traumas, o trabalho propõe um deslocamento da ideia de propósito, afirmando o existir como gesto suficiente. O cotidiano deixa de ser intervalo e se revela essência: uma memória que não monumentaliza, mas sustenta um legado íntimo e contínuo.

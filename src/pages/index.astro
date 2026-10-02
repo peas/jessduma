@@ -7,6 +7,7 @@ import Base from "../layouts/Base.astro";
 import Foto from "../components/Foto.astro";
 import Lightbox from "../components/Lightbox.astro";
 import { artista, series, exposicoes, formacao, legenda, type Obra } from "../data/obras";
+import { inline } from "../lib/textos";
 
 const [drogas, ...outras] = series;
 const cap = (ob: Obra) => `JESS DUMA. ${ob.titulo}, ${ob.ano}. Série: ${ob.serie}. ${legenda(ob)}`;
@@ -34,7 +35,7 @@ const grandes = drogas.obras.filter((x) => !x.slug.startsWith("afinidade"));
     </section>
 
     <section class="frase">
-      <p>Sua prática mapeia os rastros das relações: <em>entre corpos, espaços e o cotidiano.</em></p>
+      <p set:html={inline(artista.frase)} />
     </section>
 
     <section id="obras">
@@ -43,7 +44,7 @@ const grandes = drogas.obras.filter((x) => !x.slug.startsWith("afinidade"));
       <article class="serie destaque">
         <header class="serie-head">
           <h3>{drogas.nome}</h3>
-          <div>{drogas.texto.map((t) => <p>{t}</p>)}</div>
+          <div>{drogas.texto.map((t) => <p set:html={inline(t)} />)}</div>
         </header>
 
         {grandes.map((ob, i) => (
@@ -81,7 +82,7 @@ const grandes = drogas.obras.filter((x) => !x.slug.startsWith("afinidade"));
             <h3>{s.nome}</h3>
             <div>
               {s.verbete && <p class="verbete">{s.verbete.map((v) => <span>{v}</span>)}</p>}
-              {s.texto.map((t) => <p>{t}</p>)}
+              {s.texto.map((t) => <p set:html={inline(t)} />)}
             </div>
           </header>
           <div class="grade menor">
@@ -99,7 +100,7 @@ const grandes = drogas.obras.filter((x) => !x.slug.startsWith("afinidade"));
     <section id="bio" class="bio">
       <div class="bio-txt">
         <h2 class="rotulo">Bio</h2>
-        <p>{artista.bio}</p>
+        {artista.bio.map((t) => <p set:html={inline(t)} />)}
       </div>
       <Foto name="retrato" alt="Retrato de Jess Duma em preto e branco" sizes="(min-width: 900px) 30vw, 80vw" widths={[480, 960]} class="retrato" />
     </section>

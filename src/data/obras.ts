@@ -1,6 +1,8 @@
-// Single source for every version of the site. Texts and captions copied verbatim from
+// Single source for every version of the site. Prose (bio, series texts, CV) lives in /textos as Markdown
+// that Jess edits on GitHub; work data stays here. Texts and captions copied verbatim from
 // Portfólio_JessDuma_2026.pdf (Canva export); images extracted by scripts/import-portfolio.py.
 import type { ImageMetadata } from "astro";
+import { paragrafos, cv, secao } from "../lib/textos";
 
 const files = import.meta.glob<{ default: ImageMetadata }>("../assets/obras/*.jpg", { eager: true });
 
@@ -12,7 +14,9 @@ export function img(name: string): ImageMetadata {
 
 export const artista = {
   nome: "Jess Duma",
-  bio: "Jess Duma é artista visual não binária, nascida no Paraná e residente em São Paulo. Encontrou na fotografia e nos objetos uma linguagem íntima de conexão com o mundo, desenvolvendo uma produção que nasce da observação das relações humanas e de processos de autoanálise. Sua pesquisa investiga temas como identidade, memória, afeto, saúde mental e pertencimento, partindo de vivências íntimas em constante diálogo com o coletivo. Sua prática mapeia os rastros das relações: entre corpos, espaços e o cotidiano.",
+  bio: paragrafos("bio"),
+  // Statement under the cover; may contain *italic*.
+  frase: paragrafos("frase").join(" "),
   instagram: "jessduma",
   // Jess vai criar um e-mail novo; trocar aqui quando existir.
   email: "jessduma.di@gmail.com",
@@ -85,9 +89,7 @@ export const series: Serie[] = [
   {
     slug: "drogas-modernas",
     nome: DM,
-    texto: [
-      "Na série Drogas Modernas, Jess Duma investiga os desdobramentos da psicofarmacologia no dia a dia, incorporando a fisicalidade dos remédios e dos metais à composição das obras. Com este conjunto de trabalhos, a artista busca direcionar o olhar do público para além do diagnóstico clínico, propondo uma reflexão de caráter comunitário sobre como lidamos com a dor e com o corpo na sociedade atual.",
-    ],
+    texto: paragrafos("drogas-modernas"),
     obras: drogas,
   },
   {
@@ -97,18 +99,13 @@ export const series: Serie[] = [
       "des-: prefixo de origem latina, geralmente indica negação, oposição, separação, privação ou inversão de estado.",
       "útil: do latim utilis, que vem de uti (usar). O que serve para algum fim. Relacionado a função, valor prático.",
     ],
-    texto: [
-      "A série parte da pergunta: o que nos resta dos nossos restos? Em caminhadas fotográficas por São Paulo, Jess Duma usa uma câmera Cybershot dos anos 2000 para registrar o lixo urbano, investigando-o como narrativa de consumo e obsolescência. Ao emoldurar as imagens com materiais encontrados no próprio descarte, a artista propõe uma reflexão sobre como habitamos o mundo e a nossa relação com o que rejeitamos.",
-    ],
+    texto: paragrafos("des-util"),
     obras: desutil,
   },
   {
     slug: "fragmentos-do-que-se-e",
     nome: FR,
-    texto: [
-      "Esta série parte de agendas pessoais da infância e adolescência da artista combinadas a registros cotidianos feitos com uma câmera dos anos 2000. Ao ativar esses arquivos íntimos, o trabalho apresenta o tempo como sobreposição de camadas, deslocando a importância para além dos grandes marcos históricos.",
-      "As imagens, impressas em impressora doméstica, resgatam o hábito de colar, escrever e acumular lembranças. Entre afetos e traumas, o trabalho propõe um deslocamento da ideia de propósito, afirmando o existir como gesto suficiente. O cotidiano deixa de ser intervalo e se revela essência: uma memória que não monumentaliza, mas sustenta um legado íntimo e contínuo.",
-    ],
+    texto: paragrafos("fragmentos-do-que-se-e"),
     obras: fragmentos,
   },
 ];
@@ -120,20 +117,6 @@ export function legenda(ob: Obra): string {
   return `${ob.tecnica}. ${ob.dimensoes}${fmt}.`;
 }
 
-export const exposicoes = [
-  { ano: 2026, titulo: "Virar as Voltas", local: "Canteiro Arte Contemporânea, São Paulo" },
-  { ano: 2026, titulo: "Além do Nome, Além da Norma, Além da Forma", local: "Ateliê Casarão, São Paulo" },
-  { ano: 2026, titulo: "101 Janelas para Ver o Mundo", local: "Ateliê Casarão, São Paulo" },
-  { ano: 2025, titulo: "Imagens para Adiar o Fim do Mundo COP30", local: "Museu da UFPA, Belém" },
-  { ano: 2025, titulo: "Salão Municipal de Artes Plásticas de Guaratinguetá", local: "Guaratinguetá" },
-  { ano: 2025, titulo: "Sítio Onírico", local: "Canteiro Arte Contemporânea, São Paulo" },
-  { ano: 2024, titulo: "Janela em Movimento", local: "Espaço Casulo, São Paulo" },
-];
-
-export const formacao = [
-  { ano: 2026, titulo: "Grupo de Desenvolvimento Artístico com Marina Frúgoli e Letícia Castro", local: "Marieta, São Paulo" },
-  { ano: 2026, titulo: "Ateliê de Arte e Psicanálise com Flavia Corpas e Marcela Schwab", local: "Canteiro, São Paulo" },
-  { ano: 2025, titulo: "Projetos Culturais", local: "Instituto Arlequim, São Paulo" },
-  { ano: 2025, titulo: "Escrita Criativa: Técnicas e Práticas", local: "PUCRS" },
-  { ano: 2011, titulo: "Design de Interiores", local: "UNICURITIBA, Curitiba" },
-];
+const curriculo = cv();
+export const exposicoes = secao(curriculo, "exposi");
+export const formacao = secao(curriculo, "forma");

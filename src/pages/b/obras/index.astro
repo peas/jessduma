@@ -4,6 +4,7 @@ import BShell from "../../../components/BShell.astro";
 import Foto from "../../../components/Foto.astro";
 import { series } from "../../../data/obras";
 import { u } from "../../../lib/url";
+import { semMarcas } from "../../../lib/textos";
 ---
 <BShell title="Obras · Jess Duma · Opção B" atual="obras">
   <main class="idx">
@@ -12,7 +13,7 @@ import { u } from "../../../lib/url";
         <div class="idx-head">
           <p class="eyebrow">{i === 0 ? "Série em curso" : "Série"}</p>
           <h2>{s.nome}</h2>
-          {s.texto.slice(0, 1).map((t) => <p class="idx-txt">{t}</p>)}
+          {s.texto.slice(0, 1).map((t) => <p class="idx-txt">{semMarcas(t)}</p>)}
         </div>
         <ol class="idx-lista">
           {s.obras.map((ob) => (

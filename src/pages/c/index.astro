@@ -8,6 +8,7 @@ import Foto from "../../components/Foto.astro";
 import OpcaoBar from "../../components/OpcaoBar.astro";
 import { getImage } from "astro:assets";
 import { artista, series, exposicoes, formacao, img, type Obra } from "../../data/obras";
+import { inline, semMarcas } from "../../lib/textos";
 
 const [drogas, ...outras] = series;
 const comDetalhe = drogas.obras.filter((x) => x.detalhes.length && x.slug !== "doses");
@@ -30,13 +31,13 @@ const composicao = (ob: Obra) => ob.tecnica.replace(/ e /, ", ").split(", ");
   </section>
 
   <section class="frase">
-    <p>Sua prática mapeia os rastros das relações: <em>entre corpos, espaços e o cotidiano.</em></p>
+    <p set:html={inline(artista.frase)} />
   </section>
 
   <section id="obras" class="serie-abre">
     <p class="kicker">Série em curso · 2024–2026</p>
     <h2>{drogas.nome}</h2>
-    {drogas.texto.map((t) => <p class="serie-txt">{t}</p>)}
+    {drogas.texto.map((t) => <p class="serie-txt">{semMarcas(t)}</p>)}
   </section>
 
   {comDetalhe.map((ob) => (
@@ -76,7 +77,7 @@ const composicao = (ob: Obra) => ob.tecnica.replace(/ e /, ", ").split(", ");
       <div class="outra-txt">
         <p class="kicker">Série</p>
         <h2>{s.nome}</h2>
-        {s.texto.slice(0, 1).map((t) => <p>{t}</p>)}
+        {s.texto.slice(0, 1).map((t) => <p>{semMarcas(t)}</p>)}
       </div>
       <div class="outra-fotos">
         {s.obras.map((ob) => (
@@ -92,7 +93,7 @@ const composicao = (ob: Obra) => ob.tecnica.replace(/ e /, ", ").split(", ");
   <section id="trajetoria" class="traj">
     <div class="traj-bio">
       <Foto name="retrato" alt="Retrato de Jess Duma" sizes="240px" widths={[480]} />
-      <p>{artista.bio}</p>
+      {artista.bio.map((t) => <p>{semMarcas(t)}</p>)}
     </div>
     <div class="traj-listas">
       <h3>Exposições</h3>
