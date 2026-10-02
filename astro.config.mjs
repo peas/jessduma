@@ -1,9 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
-// GitHub Pages project site until Jess picks a domain; then set `site` to it and drop `base`.
+// The proposal pages (/a, /b, /c, /propostas) stay online but noindex, so the sitemap lists only the home.
+const proposta = /\/(a|b|c|propostas)\//;
+
 export default defineConfig({
-  site: 'https://peas.github.io',
-  base: '/jessduma',
+  site: 'https://jessduma.com.br',
   trailingSlash: 'always',
+  integrations: [sitemap({ filter: (page) => !proposta.test(new URL(page).pathname) })],
 });

@@ -7,24 +7,61 @@ import "@fontsource-variable/instrument-sans";
 import "../styles/base.css";
 // Preload Anton so the name never flashes in a fallback font (Jess saw the fonts "missing" on mobile).
 import antonLatin from "@fontsource/anton/files/anton-latin-400-normal.woff2?url";
+import { getImage } from "astro:assets";
+import { artista, img } from "../data/obras";
 
 interface Props {
   title: string;
   description?: string;
   bodyClass?: string;
 }
-const { title, description = "Jess Duma, artista visual. São Paulo.", bodyClass = "" } = Astro.props;
+const {
+  title,
+  description = "Jess Duma é artista visual, nascida no Paraná e residente em São Paulo. Fotografia e objetos sobre identidade, memória, afeto, saúde mental e pertencimento.",
+  bodyClass = "",
+} = Astro.props;
+// The proposal pages stay online for reference but out of search engines (and out of the sitemap, see astro.config.mjs).
+const proposta = /^\/(a|b|c|propostas)\//.test(Astro.url.pathname);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: img("capa"), width: 1200, format: "jpg", quality: 82 });
+const ogUrl = new URL(og.src, Astro.site);
+const pessoa = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: artista.nome,
+  jobTitle: "Artista visual",
+  url: Astro.site?.href,
+  image: ogUrl.href,
+  email: `mailto:${artista.email}`,
+  sameAs: [`https://www.instagram.com/${artista.instagram}/`],
+  address: { "@type": "PostalAddress", addressLocality: artista.cidade, addressCountry: "BR" },
+};
 ---
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- proposal phase: keep out of search engines until Jess picks a direction -->
-    <meta name="robots" content="noindex, nofollow" />
+    {proposta && <meta name="robots" content="noindex, nofollow" />}
     <link rel="preload" href={antonLatin} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="author" content={artista.nome} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={artista.nome} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content={String(og.attributes.width ?? 1200)} />
+    <meta property="og:image:height" content={String(og.attributes.height ?? "")} />
+    <meta property="og:image:alt" content="Detalhe de obra da série Drogas Modernas, de Jess Duma" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {!proposta && <script type="application/ld+json" set:html={JSON.stringify(pessoa)} />}
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='9' fill='%2314215c'/></svg>" />
   </head>
   <body class={bodyClass}>

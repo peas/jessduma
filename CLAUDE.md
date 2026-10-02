@@ -2,12 +2,13 @@
 
 Portfolio site for **Jess Duma**, a visual artist (São Paulo, born in Paraná). Paulo Silveira hosts and
 builds it as a favor; Jess reviews it in rounds and Paulo relays the feedback. Astro 7 + GitHub Pages
-(`peas/jessduma`, served at https://peas.github.io/jessduma/ until a domain is chosen).
+(`peas/jessduma`, custom domain https://jessduma.com.br since 2026-10-02; `public/CNAME`). DNS lives in
+Registro.br (Jess's account), not in the 46graus panel (her old photography site builder).
 
 ## Who Jess is (read before writing any text)
-- **Jess is non-binary** ("artista visual não binárie, nascide no Paraná"). Use neutral language in every
-  text: "Jess", "a pessoa artista", constructions without gender. The portfolio PDF says "o artista" in the
-  series texts; the site rewrote those as neutral forms, pending Jess's confirmation.
+- **Feminine wording on the site** (Paulo, 2026-10-02: "tirar o linguajar neutro e deixar no feminino").
+  The portfolio PDF says "não binárie, nascide" in the bio and "o artista" in the series texts; the site uses
+  "não binária, nascida" and "a artista". Earlier rounds (until 2026-10-01) used neutral language.
 - Never make up facts, exhibitions, prices or quotes. Texts come verbatim from the portfolio PDF.
 
 ## Brief (Jess's audios, 27/09/2026)
@@ -27,8 +28,9 @@ She complained the fonts were missing: they load, but only Anton + the Hagrid st
 site (no Instrument Sans), and Anton is preloaded in Base.astro to avoid a fallback flash on mobile.
 - `/propostas/` keeps the three-option comparison; `/a/` redirects to `/`; `/b/` and `/c/` stay online
   (reversible) with the floating `OpcaoBar`. Delete them once the site is final.
-- Still `noindex` (Base.astro) until she approves the final version; then remove it and set `site`
-  (dropping `base`) in astro.config.mjs when there is a domain.
+- Indexed since 2026-10-02. Base.astro sets canonical, Open Graph (the cover at 1200px), JSON-LD Person,
+  and `noindex` only on the proposal pages (`/a/ /b/ /c/ /propostas/`), which the sitemap
+  (@astrojs/sitemap) also filters out. `public/robots.txt` points to the sitemap.
 
 Round 2 (2026-09-28): cover back to the C cover (dark macro, white name); text and contact info in
 Aileron (contact ~half the old size, the "Contato" label stays Anton); series titles black, line-height
@@ -40,11 +42,11 @@ portfolio cover (strips of a Saturação polyptych, I or II not confirmed), so i
 - Photos: `src/assets/obras/*.jpg`, extracted from the portfolio PDF by
   `python3 scripts/import-portfolio.py <pdf>` (mapping page/index -> name inside the script; `--help`).
   Astro builds the responsive webp versions (`Foto.astro`). New portfolio = update MAP and rerun.
-- All internal links go through `u()` in `src/lib/url.ts` (base path `/jessduma/`).
+- All internal links go through `u()` in `src/lib/url.ts` (base path is `/` on the custom domain).
 
 ## Commands
 - `npm run dev` / `npm run build` / `npm run preview`. Push to `main` deploys (`.github/workflows/deploy.yml`).
 
 ## Open questions for Jess (also listed on `/`)
 Chosen detail photo for the highlight; new e-mail (placeholder is jessduma.di@gmail.com); phone on the site
-or not (left out); Hagrid Text web license; English version; domain; neutral wording of the series texts.
+or not (left out); English version.

@@ -1,2 +1,2 @@
-// Every internal link goes through here: the site lives under /jessduma/ on GitHub Pages.
+// Every internal link goes through here, so a base path (e.g. /jessduma/ on github.io) only changes astro.config.mjs.
 export const u = (path = "") => `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;

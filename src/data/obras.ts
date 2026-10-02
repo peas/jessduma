@@ -12,7 +12,7 @@ export function img(name: string): ImageMetadata {
 
 export const artista = {
   nome: "Jess Duma",
-  bio: "Jess Duma é artista visual não binárie, nascide no Paraná e residente em São Paulo. Encontrou na fotografia e nos objetos uma linguagem íntima de conexão com o mundo, desenvolvendo uma produção que nasce da observação das relações humanas e de processos de autoanálise. Sua pesquisa investiga temas como identidade, memória, afeto, saúde mental e pertencimento, partindo de vivências íntimas em constante diálogo com o coletivo. Sua prática mapeia os rastros das relações: entre corpos, espaços e o cotidiano.",
+  bio: "Jess Duma é artista visual não binária, nascida no Paraná e residente em São Paulo. Encontrou na fotografia e nos objetos uma linguagem íntima de conexão com o mundo, desenvolvendo uma produção que nasce da observação das relações humanas e de processos de autoanálise. Sua pesquisa investiga temas como identidade, memória, afeto, saúde mental e pertencimento, partindo de vivências íntimas em constante diálogo com o coletivo. Sua prática mapeia os rastros das relações: entre corpos, espaços e o cotidiano.",
   instagram: "jessduma",
   // Jess vai criar um e-mail novo; trocar aqui quando existir.
   email: "jessduma.di@gmail.com",
@@ -86,7 +86,7 @@ export const series: Serie[] = [
     slug: "drogas-modernas",
     nome: DM,
     texto: [
-      "Na série Drogas Modernas, Jess Duma investiga os desdobramentos da psicofarmacologia no dia a dia, incorporando a fisicalidade dos remédios e dos metais à composição das obras. Com este conjunto de trabalhos, busca direcionar o olhar do público para além do diagnóstico clínico, propondo uma reflexão de caráter comunitário sobre como lidamos com a dor e com o corpo na sociedade atual.",
+      "Na série Drogas Modernas, Jess Duma investiga os desdobramentos da psicofarmacologia no dia a dia, incorporando a fisicalidade dos remédios e dos metais à composição das obras. Com este conjunto de trabalhos, a artista busca direcionar o olhar do público para além do diagnóstico clínico, propondo uma reflexão de caráter comunitário sobre como lidamos com a dor e com o corpo na sociedade atual.",
     ],
     obras: drogas,
   },
@@ -98,7 +98,7 @@ export const series: Serie[] = [
       "útil: do latim utilis, que vem de uti (usar). O que serve para algum fim. Relacionado a função, valor prático.",
     ],
     texto: [
-      "A série parte da pergunta: o que nos resta dos nossos restos? Em caminhadas fotográficas por São Paulo, Jess Duma usa uma câmera Cybershot dos anos 2000 para registrar o lixo urbano, investigando-o como narrativa de consumo e obsolescência. Ao emoldurar as imagens com materiais encontrados no próprio descarte, propõe uma reflexão sobre como habitamos o mundo e a nossa relação com o que rejeitamos.",
+      "A série parte da pergunta: o que nos resta dos nossos restos? Em caminhadas fotográficas por São Paulo, Jess Duma usa uma câmera Cybershot dos anos 2000 para registrar o lixo urbano, investigando-o como narrativa de consumo e obsolescência. Ao emoldurar as imagens com materiais encontrados no próprio descarte, a artista propõe uma reflexão sobre como habitamos o mundo e a nossa relação com o que rejeitamos.",
     ],
     obras: desutil,
   },
@@ -106,7 +106,7 @@ export const series: Serie[] = [
     slug: "fragmentos-do-que-se-e",
     nome: FR,
     texto: [
-      "Esta série parte de agendas pessoais da infância e adolescência de Jess combinadas a registros cotidianos feitos com uma câmera dos anos 2000. Ao ativar esses arquivos íntimos, o trabalho apresenta o tempo como sobreposição de camadas, deslocando a importância para além dos grandes marcos históricos.",
+      "Esta série parte de agendas pessoais da infância e adolescência da artista combinadas a registros cotidianos feitos com uma câmera dos anos 2000. Ao ativar esses arquivos íntimos, o trabalho apresenta o tempo como sobreposição de camadas, deslocando a importância para além dos grandes marcos históricos.",
       "As imagens, impressas em impressora doméstica, resgatam o hábito de colar, escrever e acumular lembranças. Entre afetos e traumas, o trabalho propõe um deslocamento da ideia de propósito, afirmando o existir como gesto suficiente. O cotidiano deixa de ser intervalo e se revela essência: uma memória que não monumentaliza, mas sustenta um legado íntimo e contínuo.",
     ],
     obras: fragmentos,
